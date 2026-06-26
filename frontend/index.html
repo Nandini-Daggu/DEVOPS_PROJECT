@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuizGen AI - AI-Powered Quiz Generator</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <svg style="position: absolute; width: 0; height: 0;">
+        <defs>
+            <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#6C63FF" />
+                <stop offset="100%" stop-color="#00D2FF" />
+            </linearGradient>
+        </defs>
+    </svg>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <i class="fas fa-brain"></i>
+                <span>QuizGen <span class="brand-accent">AI</span></span>
+            </div>
+            <div class="nav-links">
+                <a href="#home" class="nav-link active">Home</a>
+                <a href="#how-it-works" class="nav-link">How It Works</a>
+                <a href="#about" class="nav-link">About</a>
+            </div>
+            <div class="nav-status" id="navStatus">
+                <span class="status-dot"></span>
+                <span>Ready</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Home Section -->
+        <section id="home" class="section active-section">
+            <div class="container">
+                <!-- Hero -->
+                <div class="hero">
+                    <div class="hero-badge">
+                        <i class="fas fa-sparkles"></i>
+                        AI-Powered Learning
+                    </div>
+                    <h1 class="hero-title">
+                        Transform <span class="gradient-text">PowerPoints</span><br>
+                        into Interactive Quizzes
+                    </h1>
+                    <p class="hero-subtitle">
+                        Upload any PowerPoint presentation and let AI craft a personalized quiz 
+                        to test your knowledge. Perfect for students, educators, and lifelong learners.
+                    </p>
+                </div>
+
+                <!-- Steps -->
+                <div class="steps-container">
+                    <div class="step-card">
+                        <div class="step-number">1</div>
+                        <div class="step-icon"><i class="fas fa-upload"></i></div>
+                        <h3>Upload PPT</h3>
+                        <p>Upload your PowerPoint file and we'll extract all the content</p>
+                    </div>
+                    <div class="step-connector">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                    <div class="step-card">
+                        <div class="step-number">2</div>
+                        <div class="step-icon"><i class="fas fa-sliders-h"></i></div>
+                        <h3>Configure</h3>
+                        <p>Choose question count & difficulty level</p>
+                    </div>
+                    <div class="step-connector">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                    <div class="step-card">
+                        <div class="step-number">3</div>
+                        <div class="step-icon"><i class="fas fa-robot"></i></div>
+                        <h3>AI Generation</h3>
+                        <p>AI analyzes slides and creates smart MCQs</p>
+                    </div>
+                    <div class="step-connector">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                    <div class="step-card">
+                        <div class="step-number">4</div>
+                        <div class="step-icon"><i class="fas fa-trophy"></i></div>
+                        <h3>Quiz & Learn</h3>
+                        <p>Take the quiz and get detailed feedback</p>
+                    </div>
+                </div>
+
+                <!-- Upload & Config Section -->
+                <div class="upload-section" id="uploadSection">
+                    <div class="section-header">
+                        <h2>Get Started</h2>
+                        <p>Upload your presentation to begin</p>
+                    </div>
+
+                    <!-- Demo Mode Quick Start -->
+                    <div class="demo-quick-start" id="demoQuickStart">
+                        <div class="demo-badge">
+                            <i class="fas fa-laptop-code"></i> Demo Mode
+                        </div>
+                        <p>Don't have a PowerPoint file handy? Try a sample quiz instantly!</p>
+                        <button class="demo-btn" id="demoBtn">
+                            <i class="fas fa-rocket"></i>
+                            Try Demo Quiz
+                        </button>
+                    </div>
+
+                    <!-- File Upload Area -->
+                    <div class="upload-card" id="uploadCard">
+                        <div class="upload-zone" id="uploadZone">
+                            <div class="upload-content" id="uploadContent">
+                                <div class="upload-icon">
+                                    <i class="fas fa-cloud-upload-alt"></i>
+                                </div>
+                                <h3>Drag & Drop your PowerPoint file</h3>
+                                <p>or click to browse files</p>
+                                <span class="upload-hint">Supports .pptx and .ppt files up to 50MB</span>
+                            </div>
+                            <div class="upload-progress" id="uploadProgress" style="display: none;">
+                                <div class="progress-circle">
+                                    <svg viewBox="0 0 36 36">
+                                        <path class="circle-bg" d="M18 2.0845
+                                            a 15.9155 15.9155 0 0 1 0 31.831
+                                            a 15.9155 15.9155 0 0 1 0 -31.831"/>
+                                        <path class="circle-fill" id="progressCircle" 
+                                            stroke-dasharray="0, 100"
+                                            d="M18 2.0845
+                                            a 15.9155 15.9155 0 0 1 0 31.831
+                                            a 15.9155 15.9155 0 0 1 0 -31.831"/>
+                                    </svg>
+                                    <div class="progress-text" id="progressText">0%</div>
+                                </div>
+                                <p id="progressLabel">Processing file...</p>
+                            </div>
+                            <div class="upload-success" id="uploadSuccess" style="display: none;">
+                                <div class="success-icon"><i class="fas fa-check-circle"></i></div>
+                                <h3>File Uploaded Successfully!</h3>
+                                <p id="fileInfo">Slides detected: <span id="slideCount">0</span></p>
+                            </div>
+                            <input type="file" id="fileInput" accept=".pptx,.ppt" hidden>
+                        </div>
+                    </div>
+
+                    <!-- Config Card -->
+                    <div class="config-card" id="configCard" style="display: none;">
+                        <h3><i class="fas fa-cog"></i> Quiz Configuration</h3>
+                        <div class="config-grid">
+                            <div class="config-item">
+                                <label for="numQuestions">Number of Questions</label>
+                                <div class="input-group">
+                                    <button class="input-btn" id="decrementQ">−</button>
+                                    <input type="number" id="numQuestions" value="10" min="5" max="30">
+                                    <button class="input-btn" id="incrementQ">+</button>
+                                </div>
+                                <span class="input-hint">Min: 5 | Max: 30</span>
+                            </div>
+                            <div class="config-item">
+                                <label>Difficulty Level</label>
+                                <div class="difficulty-selector" id="difficultySelector">
+                                    <button class="diff-btn active" data-difficulty="simple">
+                                        <i class="fas fa-star"></i>
+                                        <span>Simple</span>
+                                    </button>
+                                    <button class="diff-btn" data-difficulty="medium">
+                                        <i class="fas fa-stars"></i>
+                                        <span>Medium</span>
+                                    </button>
+                                    <button class="diff-btn" data-difficulty="complex">
+                                        <i class="fas fa-rocket"></i>
+                                        <span>Complex</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="generate-btn" id="generateBtn">
+                            <span class="btn-text">Generate Quiz</span>
+                            <i class="fas fa-magic btn-icon"></i>
+                            <div class="btn-loader" style="display: none;">
+                                <div class="loader-dots">
+                                    <span></span><span></span><span></span>
+                                </div>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quiz Section -->
+        <section id="quiz" class="section" style="display: none;">
+            <div class="container">
+                <!-- Quiz Header -->
+                <div class="quiz-header">
+                    <div class="quiz-info">
+                        <div class="quiz-progress-text" id="quizProgress">Question 1 of 10</div>
+                        <div class="quiz-difficulty-badge" id="quizDifficulty">
+                            <i class="fas fa-tag"></i> Medium
+                        </div>
+                    </div>
+                    <div class="quiz-timer" id="quizTimer">
+                        <i class="fas fa-clock"></i>
+                        <span id="timerDisplay">15:00</span>
+                    </div>
+                </div>
+
+                <!-- Progress Bar -->
+                <div class="progress-bar-container">
+                    <div class="progress-bar-fill" id="progressBarFill" style="width: 0%"></div>
+                </div>
+
+                <!-- Question Card -->
+                <div class="question-card" id="questionCard">
+                    <div class="question-number-badge" id="qNumberBadge">Q1</div>
+                    <h2 class="question-text" id="questionText">Loading question...</h2>
+                    
+                    <div class="options-grid" id="optionsGrid">
+                        <!-- Options will be dynamically inserted -->
+                    </div>
+
+                    <div class="question-nav">
+                        <button class="nav-btn btn-prev" id="prevBtn" disabled>
+                            <i class="fas fa-arrow-left"></i> Previous
+                        </button>
+                        <button class="nav-btn btn-next" id="nextBtn">
+                            Next <i class="fas fa-arrow-right"></i>
+                        </button>
+                        <button class="nav-btn btn-submit" id="submitBtn" style="display: none;">
+                            <i class="fas fa-check-circle"></i> Submit Quiz
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Results Section -->
+        <section id="results" class="section" style="display: none;">
+            <div class="container">
+                <div class="results-container">
+                    <!-- Score Card -->
+                    <div class="score-card">
+                        <div class="score-animation" id="scoreAnimation">
+                            <div class="score-circle" id="scoreCircle">
+                                <div class="score-inner">
+                                    <span class="score-number" id="scoreNumber">0</span>
+                                    <span class="score-label">/ <span id="scoreTotal">0</span></span>
+                                </div>
+                            </div>
+                            <div class="score-percentage" id="scorePercentage">0%</div>
+                            <div class="score-grade" id="scoreGrade">
+                                <i class="fas fa-trophy"></i>
+                                <span>Excellent!</span>
+                            </div>
+                        </div>
+                        <div class="score-stats">
+                            <div class="stat-item correct-stat">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Correct: <strong id="correctCount">0</strong></span>
+                            </div>
+                            <div class="stat-item wrong-stat">
+                                <i class="fas fa-times-circle"></i>
+                                <span>Wrong: <strong id="wrongCount">0</strong></span>
+                            </div>
+                            <div class="stat-item accuracy-stat">
+                                <i class="fas fa-bullseye"></i>
+                                <span>Accuracy: <strong id="accuracyDisplay">0%</strong></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Review Section -->
+                    <div class="review-section">
+                        <h2><i class="fas fa-book-open"></i> Detailed Review</h2>
+                        <div class="review-list" id="reviewList">
+                            <!-- Reviews will be dynamically inserted -->
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="results-actions">
+                        <button class="action-btn btn-retake" id="retakeBtn">
+                            <i class="fas fa-redo"></i> Retake Quiz
+                        </button>
+                        <button class="action-btn btn-new" id="newQuizBtn">
+                            <i class="fas fa-plus-circle"></i> New Quiz
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Loading Overlay -->
+        <div class="loading-overlay" id="loadingOverlay" style="display: none;">
+            <div class="loading-modal">
+                <div class="loading-ai-icon">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <h3>AI is Generating Your Quiz</h3>
+                <div class="loading-steps">
+                    <div class="loading-step active" id="step1">
+                        <i class="fas fa-file-alt"></i>
+                        <span>Analyzing slide content...</span>
+                    </div>
+                    <div class="loading-step" id="step2">
+                        <i class="fas fa-lightbulb"></i>
+                        <span>Creating questions...</span>
+                    </div>
+                    <div class="loading-step" id="step3">
+                        <i class="fas fa-check-double"></i>
+                        <span>Validating & formatting...</span>
+                    </div>
+                </div>
+                <div class="loading-bar">
+                    <div class="loading-bar-fill" id="loadingBarFill"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="pptx-parser.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
