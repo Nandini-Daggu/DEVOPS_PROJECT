@@ -1,0 +1,48 @@
+services:
+
+  # ─────────────────────────────────────────
+  # Backend: Flask API served via gunicorn
+  # ─────────────────────────────────────────
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: quizgen-backend
+    restart: unless-stopped
+    ports:
+      - "5000:5000"            # Accessible from browser at http://localhost:5000
+    environment:
+      # Pass OPENAI_API_KEY from your shell or from a .env file at the project root.
+      # Create a .env file (see .env.example) before running docker compose up.
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+      - PORT=5000
+    healthcheck:
+      test: ["CMD", "python", "-c",
+             "import urllib.request; urllib.request.urlopen('http://localhost:5000/api/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+    networks:
+      - quizgen-network
+
+  # ─────────────────────────────────────────
+  # Frontend: Static files served via nginx
+  # ─────────────────────────────────────────
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: quizgen-frontend
+    restart: unless-stopped
+    ports:
+      - "8080:80"              # Accessible from browser at http://localhost:8080
+    depends_on:
+      backend:
+        condition: service_healthy
+    networks:
+      - quizgen-network
+
+networks:
+  quizgen-network:
+    driver: bridge

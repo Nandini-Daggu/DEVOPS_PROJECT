@@ -1,0 +1,52 @@
+# Secrets – never copy into images
+.env
+backend/.env
+
+# Python virtual environments
+venv/
+.venv/
+env/
+backend/venv/
+backend/.venv/
+
+# Python cache
+__pycache__/
+backend/__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pycache
+
+# IDE / Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# Git
+.git/
+.gitignore
+
+# Docker files (no need to COPY into image)
+docker-compose.yml
+*/Dockerfile
+*/nginx.conf
+
+# Node / npm (if ever added)
+node_modules/
+npm-debug.log
+
+# Logs
+*.log
+logs/
+
+# Test artifacts
+.pytest_cache/
+coverage/
+.coverage
+
+# Docs
+README.md
+docs/
